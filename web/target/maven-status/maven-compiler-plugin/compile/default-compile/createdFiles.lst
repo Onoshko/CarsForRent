@@ -1,1 +1,3 @@
-com\github\web\servlet\FirstPageServlet.class
+com\github\Onoshko\web\Listener.class
+com\github\Onoshko\web\servlet\LogoutServlet.class
+com\github\Onoshko\web\filter\AuthFilter.class

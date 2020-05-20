@@ -24,6 +24,10 @@
         <input class="button" type="submit" value="Войти">
 
     </form>
+    <form method="get" action="/registration">
+        <input class="button" type="submit" value="Регистрация">
+    </form>
+
 </div>
 </body>
-</html>
+</html></p>
