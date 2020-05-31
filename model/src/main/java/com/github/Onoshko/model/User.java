@@ -17,18 +17,12 @@ public class User {
         this.cardNumber = cardNumber;
     }
 
-    public User() {
 
-    }
-
-
-
-
-    public Long getLong() {
+    public Long getId() {
         return id;
     }
 
-    public void setLong(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

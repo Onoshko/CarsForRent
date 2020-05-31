@@ -1,6 +1,8 @@
 package com.github.Onoshko.service.impl;
 
+import com.github.Onoshko.dao.impl.DefaultAuthUserDao;
 import com.github.Onoshko.dao.impl.DefaultUserDao;
+import com.github.Onoshko.model.AuthUser;
 import com.github.Onoshko.model.User;
 import com.github.Onoshko.service.UserService;
 
@@ -16,8 +18,25 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public List<User> getUser() {return DefaultUserDao.getInstance().getAllUsers();}
+    public List<User> getAllUsers() {return DefaultUserDao.getInstance().getAllUsers();}
 
+    @Override
+    public Long saveUser(User user) {
+        return DefaultUserDao.getInstance().addUser(user);
+    }
 
+    @Override
+    public void deleteUser(Long Id) {DefaultUserDao.getInstance().deleteUser(Id);
 
+    }
+
+    @Override
+    public Long updateUser(User user) {return DefaultUserDao.getInstance().updateUser(user);
+
+    }
+
+    @Override
+    public List<AuthUser> getAllAuthUsers() {return DefaultAuthUserDao.getInstance().getAllAuthUsers();
+
+    }
 }

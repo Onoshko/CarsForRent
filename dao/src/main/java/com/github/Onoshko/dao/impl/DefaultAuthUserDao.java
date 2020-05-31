@@ -4,8 +4,11 @@ import com.github.Onoshko.dao.AuthUserDao;
 import com.github.Onoshko.dao.DataSource;
 import com.github.Onoshko.model.AuthUser;
 import com.github.Onoshko.model.Role;
+import com.github.Onoshko.model.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DefaultAuthUserDao implements AuthUserDao {
 
@@ -50,9 +53,30 @@ public class DefaultAuthUserDao implements AuthUserDao {
             ps.setLong(4, user.getUserId());
             ps.executeUpdate();
 
-            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
-                return generatedKeys.getLong(1);
+            try (ResultSet keys = ps.getGeneratedKeys()) {
+                keys.next();
+                return keys.getLong(1);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public List<AuthUser> getAllAuthUsers() {
+        try (Connection connection = DataSource.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement("select * from auth_user");
+             ResultSet rs = ps.executeQuery()) {
+            final ArrayList<AuthUser> users = new ArrayList<>();
+            while (rs.next()) {
+                AuthUser user = new AuthUser(
+                        rs.getLong("id"),
+                        rs.getString("login"),
+                        rs.getString("password"),
+                        Role.valueOf(rs.getString("role")),
+                        rs.getLong("userid"));
+                users.add(user);
+            }
+            return users;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
